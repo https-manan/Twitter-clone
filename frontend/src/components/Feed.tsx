@@ -5,7 +5,7 @@ import Tweet from './Tweet'
 
 const Feed = () => {
   return (
-    <div className='w-[60%]'>
+    <div className='w-[60%] '>
       <div>
         <CreatePost/>
         <Tweet/>
