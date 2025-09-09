@@ -1,5 +1,5 @@
 import {} from 'react'
-import image from "../assets/image.png";
+import image from "../assets/manan.png";
 import { CiHeart } from "react-icons/ci";
 import { FaRegComment } from "react-icons/fa";
 import { CiBookmark } from "react-icons/ci";

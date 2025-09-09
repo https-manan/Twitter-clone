@@ -1,6 +1,6 @@
 import {} from "react";
 import { CiImageOn } from "react-icons/ci";
-import image from "../assets/image.png";
+import image from "../assets/manan.png";
 
 const CreatePost = () => {
   return (
