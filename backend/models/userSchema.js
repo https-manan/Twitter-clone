@@ -36,7 +36,11 @@ const userSchema = new mongoose.Schema(
     following:{
         type:Array,
         default:[]
-    }
+    },
+    bookmark: {
+      type: Array,
+      default: []
+    },
   },
   { timestamps: true }
 );

@@ -93,7 +93,104 @@ const logout = async (req, res) => {
 };
 
 
+const bookmark = async (req, res) => {
+    try {
+        const loggedInUserId = req.userId;
+        const tweetId = req.params.id;
+
+        // Check if tweet exists
+        const tweet = await User.findById(tweetId);
+        if (!tweet) {
+            return res.status(404).json({
+                success: false,
+                msg: "Tweet not found"
+            });
+        }
+
+        // Find the user and check bookmarks
+        const user = await User.findById(loggedInUserId);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                msg: "User not found"
+            });
+        }
+
+        if (user.bookmark.includes(tweetId)) {
+            // Remove the bookmark
+            await User.findByIdAndUpdate(loggedInUserId, { $pull: { bookmark: tweetId } });
+            return res.json({
+                success: true,
+                msg: "Bookmark removed"
+            });
+        } else {
+            // Add the bookmark
+            await User.findByIdAndUpdate(loggedInUserId, { $push: { bookmark: tweetId } });
+            return res.json({
+                success: true,
+                msg: "Tweet bookmarked"
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            msg: "Server error"
+        });
+    }
+};
 
 
 
-module.exports = { register,login,logout };
+
+
+const getMyProfile =async (req,res)=>{
+    try {
+        const userId = req.params.id;
+        const user = User.findById(userId).select("-password");
+        if(!user){
+            res.status(400).json({
+                success:false,
+                message:'User not found',
+            })
+        }else{
+            res.status(200).json({
+                user
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const getOtherUsers =async(rqe,res)=>{
+    try {
+        const id = req.params.id;
+        const otherUsers = await User.find({_id:{$ne:id}}).select('-password'); //so it will return all the users except the one with the logined by id
+        if(!otherUsers){
+            return res.status(400).json({
+                success:false,
+                message:"No user found"
+            })
+        }else{
+            return res.status(200).send({
+                success:true,
+                otherUsers
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+const follow = ()=>{
+    try {
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+module.exports = { register,login,logout, getMyProfile, bookmark, getOtherUsers,follow};
