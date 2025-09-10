@@ -61,7 +61,7 @@ const Profile = () => {
 
           
           <div className="flex border-b border-gray-200">
-            <div className="flex-1 text-center font-semibold cursor-pointer py-3 hover:bg-gray-100 border-b-2 border-blue-500 text-blue-500">
+            <div className="flex-1 text-center font-semibold cursor-pointer py-3 hover:bg-gray-100  ">
               Posts
             </div>
             <div className="flex-1 text-center font-semibold text-gray-500 cursor-pointer py-3 hover:bg-gray-100">

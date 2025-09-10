@@ -25,7 +25,7 @@ const Login = () => {
           
           <div className="space-y-4 mb-6">
             {isLogin ? (
-              // Login form - only username and password
+             
               <>  
                 <input 
                   type="text" 
@@ -39,7 +39,7 @@ const Login = () => {
                 />
               </>
             ) : (
-              // Sign up form - all fields
+             
               <>
                 <input 
                   type="text" 
