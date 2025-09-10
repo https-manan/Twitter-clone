@@ -20,7 +20,7 @@ const createTweet = async (req, res) => {
             });
         }
 
-        await Tweet.create({
+        const newTweet = await Tweet.create({
             description,
             userId: id,
             userDetails: [{
@@ -31,6 +31,7 @@ const createTweet = async (req, res) => {
         });
 
         res.status(201).json({
+            id:newTweet._id,
             message: 'Tweet created successfully',
             success: true
         });
@@ -102,7 +103,32 @@ const likeOrDislike = async (req, res) => {
     }
 };
 
-// Updated bookmark function - now works with User schema
+
+const getAllTweets = async (req,res)=>{
+    try {
+        const userId = req.userId;
+        if(!userId){
+            return res.status(400).json({
+                success:false,
+                message:'No user found'
+            })
+        }
+        const userTweets = await Tweet.find({ userId }).sort({ createdAt: -1 });
+        if (!userTweets || userTweets.length === 0) {
+        return res.status(404).json({
+            success: false,
+            message: "No tweets by this user",
+        });
+        }
+        return res.status(200).json({
+            userTweets
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
 
 
@@ -110,4 +136,5 @@ module.exports = {
     createTweet, 
     deleteTweet, 
     likeOrDislike, 
+    getAllTweets
 };
