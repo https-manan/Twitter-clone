@@ -138,7 +138,7 @@ const bookmark = async (req, res) => {
 
 const getMyProfile =async (req,res)=>{
     try {
-        const userId = req.userId; //Getting from the auth middlewar
+        const userId = req.userId;
         const user = await User.findById(userId).select("-password");
         if(!user){
             res.status(400).json({
@@ -158,7 +158,7 @@ const getMyProfile =async (req,res)=>{
 const getOtherUsers =async(req,res)=>{
     try {
         const id = req.params.id;
-        const otherUsers = await User.find({_id:{$ne:id}}).select('-password'); //so it will return all the users except the one with the logined by id
+        const otherUsers = await User.find({_id:{$ne:id}}).select('-password'); 
         if(!otherUsers){
             return res.status(400).json({
                 success:false,

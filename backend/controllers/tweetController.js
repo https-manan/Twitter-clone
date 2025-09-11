@@ -103,38 +103,92 @@ const likeOrDislike = async (req, res) => {
     }
 };
 
+const getAllTweets = async (req, res) => {
+  try {
+    const userId = req.userId; 
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: "No user found",
+      });
+    }
 
-const getAllTweets = async (req,res)=>{
+    // find the logged-in user to get their "following" list
+    const loggedInUser = await User.findById(userId).select("following");
+    if (!loggedInUser) {
+      return res.status(404).json({
+        success: false,
+        message: "No accounts following",
+      });
+    }
+    const ids = [userId, ...loggedInUser.following];
+
+    // fetch tweets from yourself + following users
+    const tweets = await Tweet.find({ userId: { $in: ids } })
+      .sort({ createdAt: -1 });
+
+    if (!tweets || tweets.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No tweets found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      tweets,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
+
+
+const getFollowingTweets = async (req, res) => {
     try {
         const userId = req.userId;
-        if(!userId){
-            return res.status(400).json({
-                success:false,
-                message:'No user found'
-            })
+        
+        const loggedInUser = await User.findById(userId).select("following");
+        if (!loggedInUser) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
         }
-        const userTweets = await Tweet.find({ userId }).sort({ createdAt: -1 });
-        if (!userTweets || userTweets.length === 0) {
-        return res.status(404).json({
-            success: false,
-            message: "No tweets by this user",
-        });
+
+        if (!loggedInUser.following || loggedInUser.following.length === 0) {
+            return res.status(200).json({
+                success: true,
+                message: "You're not following anyone yet",
+            });
         }
+
+        const tweets = await Tweet.find({ userId: { $in: loggedInUser.following } }).sort({ createdAt: -1 });
+
         return res.status(200).json({
-            userTweets
-        })
+            success: true,
+            tweets,
+            message: tweets.length === 0 ? "No tweets from followed users" : undefined
+        });
+
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
     }
-}
-
-
-
-
+};
 
 module.exports = { 
     createTweet, 
     deleteTweet, 
     likeOrDislike, 
-    getAllTweets
+    getAllTweets,
+    getFollowingTweets
 };

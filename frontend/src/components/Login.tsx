@@ -1,20 +1,66 @@
 import { useState } from 'react'
 import x from '../assets/x-logo.png'
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from 'react-router-dom';
+
 
 const Login = () => {
-    const [isLogin, setIsLogin] = useState(false);
-  
+  let [isLogin, setIsLogin] = useState(false);
+  let [name, setName] = useState('');
+  let [username, setUsername] = useState('');
+  let [email, setEmail] = useState('');
+  let [password, setPassword] = useState('');
+  let nevigate = useNavigate();
+  async function onclickHandler(e: any) {
+    e.preventDefault();
+    if (isLogin) {
+      try {
+        await axios.post('http://localhost:8080/api/v1/user/login', {
+          username,
+          password
+        })
+        toast.success(" Login Successful!,",{
+          position: "top-center",
+          className:"bg-green-600 text-white text-center rounded-md py-2 px-4",
+        });
+        nevigate('/')
+      } catch (error) {
+        toast.error('Error in Login')
+        console.log(error)
+      }
+    } else {
+      //we gonna req for signup api
+      try {
+        await axios.post('http://localhost:8080/api/v1/user/register', {
+          name,
+          username,
+          email,
+          password
+        })
+        toast.success(" Signup Successful!", {
+          position: "top-center",
+          className:"bg-green-600 text-white text-center rounded-md py-2 px-4",
+        });
+        setIsLogin(true);
+      } catch (error) {
+        toast.error('Error in SignUp')
+        console.log(error)
+      }
+    }
+  }
   return (
     <div className="min-h-screen bg-white flex">
-     
+
       <div className="flex-1 flex items-center justify-center">
         <img src={x} alt="X Logo" className="w-96 h-96 object-contain" />
       </div>
 
-      
+
       <div className="flex-1 flex items-center justify-start bg-white px-16">
         <div className="max-w-md w-full">
-          
+
           <div className="mb-8">
             <h1 className="text-black text-5xl font-bold mb-6">Happening now</h1>
             <h2 className="text-black text-2xl font-bold mb-8">
@@ -22,42 +68,54 @@ const Login = () => {
             </h2>
           </div>
 
-          
+
           <div className="space-y-4 mb-6">
             {isLogin ? (
-             
-              <>  
-                <input 
-                  type="text" 
-                  placeholder="Username or Email"
+
+              <>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => { setUsername(e.target.value) }}
+                  placeholder="Username"
                   className="w-full p-4 border border-gray-300 rounded-md text-black placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
-                <input 
-                  type="password" 
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => { setPassword(e.target.value) }}
                   placeholder="Password"
                   className="w-full p-4 border border-gray-300 rounded-md text-black placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
               </>
             ) : (
-             
+
               <>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
+                  value={name}
                   placeholder="Name"
+                  onChange={(e) => { setName(e.target.value) }}
                   className="w-full p-4 border border-gray-300 rounded-md text-black placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
-                <input 
-                  type="text" 
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => { setUsername(e.target.value) }}
                   placeholder="Username"
                   className="w-full p-4 border border-gray-300 rounded-md text-black placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
-                <input 
-                  type="email" 
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => { setEmail(e.target.value) }}
                   placeholder="Email"
                   className="w-full p-4 border border-gray-300 rounded-md text-black placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
-                <input 
-                  type="password" 
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => { setPassword(e.target.value) }}
                   placeholder="Password"
                   className="w-full p-4 border border-gray-300 rounded-md text-black placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
@@ -65,12 +123,12 @@ const Login = () => {
             )}
           </div>
 
- 
-          <button className="w-full bg-blue-500 text-white py-3 rounded-full font-semibold text-base hover:bg-blue-600 transition mb-6">
+
+          <button onClick={onclickHandler} className="w-full bg-blue-500 text-white py-3 rounded-full font-semibold text-base hover:bg-blue-600 transition mb-6">
             {isLogin ? "Sign In" : "Sign up"}
           </button>
 
-          
+
           {!isLogin && (
             <p className="text-gray-500 text-xs mb-12">
               By signing up, you agree to the{' '}
@@ -86,7 +144,7 @@ const Login = () => {
             <h3 className="text-black text-lg font-bold mb-4">
               {isLogin ? "Don't have an account?" : "Already have an account?"}
             </h3>
-            <button 
+            <button
               onClick={() => setIsLogin(!isLogin)}
               className="w-full border border-gray-300 text-blue-500 py-3 rounded-full font-semibold hover:bg-blue-50 transition"
             >
