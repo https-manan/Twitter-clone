@@ -2,9 +2,12 @@ import LeftSideBar from './LeftSideBar'
 import RightSideBar from './RightSideBar'
 import image from '../assets/bg.png'
 import manan from '../assets/manan.png'
-
+import { useRecoilValue } from 'recoil';
+import { userProfileSelector } from '../recoil/selector';
 
 const Profile = () => {
+  const userId = '123';
+  const userData = useRecoilValue(userProfileSelector(userId));
   return (
     <div className="flex justify-between">
       <LeftSideBar />
@@ -14,7 +17,7 @@ const Profile = () => {
         <div className="border-b border-r border-gray-200">
           
           <div className="px-4 py-3 border-b border-gray-200">
-            <h1 className="font-bold text-xl">Manan</h1>
+            <h1 className="font-bold text-xl">{userData?.name}</h1>
             <p className="text-gray-500 text-sm">10 Posts</p>
           </div>
           
@@ -41,8 +44,8 @@ const Profile = () => {
           <div className="pt-20 px-4 pb-4">
             <div className="flex justify-between items-start mb-4">
               <div>
-                <h2 className="font-bold text-xl text-gray-900">Manan Bhardwaj</h2>
-                <p className="text-gray-500">@manan-dev</p>
+                <h2 className="font-bold text-xl text-gray-900">{userData?.name}</h2>
+                <p className="text-gray-500">{userData?.username}</p>
               </div>
               <button className="bg-black text-white px-4 py-2 rounded-full font-semibold hover:bg-gray-800 transition">
                 Edit Profile
@@ -54,8 +57,8 @@ const Profile = () => {
             </p>
             
             <div className="flex gap-4 text-sm text-gray-500">
-              <span><strong className="text-gray-900">120</strong> Following</span>
-              <span><strong className="text-gray-900">1.2K</strong> Followers</span>
+              <span><strong className="text-gray-900">{userData?.following}</strong> Following</span>
+              <span><strong className="text-gray-900">{userData?.followers}</strong> Followers</span>
             </div>
           </div>
 
