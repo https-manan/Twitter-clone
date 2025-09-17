@@ -17,16 +17,12 @@ const Login = () => {
     e.preventDefault();
     if (isLogin) {
       try {
-        const response = await axios.post('http://localhost:8080/api/v1/user/login', {
+        await axios.post('http://localhost:8080/api/v1/user/login', {
           username,
           password
         }, {
-          withCredentials: true // Important for cookies!
+          withCredentials: true 
         });
-
-        // Cookies are automatically stored by the browser
-        // No need to manually store anything!
-
         toast.success("Login Successful!", {
           position: "top-center",
           className: "bg-green-600 text-white text-center rounded-md py-2 px-4",
@@ -37,7 +33,6 @@ const Login = () => {
         console.log(error);
       }
     } else {
-      // Signup API
       try {
         await axios.post('http://localhost:8080/api/v1/user/register', {
           name,

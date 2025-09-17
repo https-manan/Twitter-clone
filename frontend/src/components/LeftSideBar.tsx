@@ -4,6 +4,7 @@ import { CiHome, CiSearch, CiBellOn, CiMail, CiUser } from "react-icons/ci";
 import { CiViewList } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const LeftSideBar = () => {
   return (
@@ -33,7 +34,7 @@ const LeftSideBar = () => {
           <CiUser size={24} /> <span>Profile</span>
         </Link>
         <div className="flex items-center gap-4 text-lg font-medium cursor-pointer p-2 rounded-full hover:bg-gray-100 transition">
-          <IoIosLogOut size={24} /> <span>Logout</span>
+          <IoIosLogOut size={24} /> <span onClick={()=>{axios.post('http://localhost:8080/api/v1/user/logout')}}>Logout</span>
         </div>
       </div>
 
