@@ -15,7 +15,10 @@ dbConnection();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());   
 app.use(cookieParser());
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:5173', // Your frontend URL
+  credentials: true // CRITICAL for cookies!
+}));
 
 // Routes
 app.use('/api/v1/user', userRoutes);
@@ -23,9 +26,6 @@ app.use('/api/v1/tweet', tweetRoute);
 
 
 
-app.get('/', (req, res) => {
-  res.json({ message: "Working" });
-});
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

@@ -3,7 +3,8 @@ const User = require('../models/userSchema');
 
 const createTweet = async (req, res) => {
     try {
-        const { description, id } = req.body;
+        const { description } = req.body;
+        const id = req.userId;
         if (!description || !id) {
             return res.status(401).json({
                 message: 'Fields are required.',

@@ -8,8 +8,8 @@ route.post('/register',register)
 route.post('/login', login);
 route.post('/logout', logout);
 route.put('/bookmark/:id',isAuthenticated,bookmark);
-route.get('/getMyProfile/:id',isAuthenticated,getMyProfile)
-route.get('/otherUsers/:id',isAuthenticated,getOtherUsers)
+route.get('/getMyProfile',isAuthenticated,getMyProfile)
+route.get('/otherUsers',isAuthenticated,getOtherUsers)
 route.get('/follow/:id',isAuthenticated,follow)
 route.delete('/unfollow/:id',isAuthenticated,unfollow)
 

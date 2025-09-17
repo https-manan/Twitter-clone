@@ -1,4 +1,4 @@
-import {} from 'react'
+import { } from 'react'
 import LeftSideBar from './LeftSideBar'
 import Feed from './Feed'
 import RightSideBar from './RightSideBar'
@@ -6,9 +6,9 @@ import RightSideBar from './RightSideBar'
 const Home = () => {
   return (
     <div className='flex justify-between'>
-      <LeftSideBar/>
-      <Feed/>
-      <RightSideBar/>
+      <LeftSideBar />
+      <Feed />
+      <RightSideBar />
     </div>
   )
 }

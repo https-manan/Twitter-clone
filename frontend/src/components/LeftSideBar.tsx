@@ -1,4 +1,4 @@
-import {} from 'react'
+import { } from 'react'
 import logo from '../assets/x-logo.png'
 import { CiHome, CiSearch, CiBellOn, CiMail, CiUser } from "react-icons/ci";
 import { CiViewList } from "react-icons/ci";
@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const LeftSideBar = () => {
   return (
     <div className="flex flex-col justify-between h-screen p-4 border-r w-[20%] border-gray-200">
-      
+
       <div className="mb-6">
         <img src={logo} alt="x-logo" className="w-8 h-8" />
       </div>

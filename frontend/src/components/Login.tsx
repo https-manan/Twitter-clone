@@ -5,62 +5,66 @@ import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from 'react-router-dom';
 
-
 const Login = () => {
   let [isLogin, setIsLogin] = useState(false);
   let [name, setName] = useState('');
   let [username, setUsername] = useState('');
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
-  let nevigate = useNavigate();
+  let navigate = useNavigate();
+
   async function onclickHandler(e: any) {
     e.preventDefault();
     if (isLogin) {
       try {
-        await axios.post('http://localhost:8080/api/v1/user/login', {
+        const response = await axios.post('http://localhost:8080/api/v1/user/login', {
           username,
           password
-        })
-        toast.success(" Login Successful!,",{
-          position: "top-center",
-          className:"bg-green-600 text-white text-center rounded-md py-2 px-4",
+        }, {
+          withCredentials: true // Important for cookies!
         });
-        nevigate('/')
-      } catch (error) {
-        toast.error('Error in Login')
-        console.log(error)
+
+        // Cookies are automatically stored by the browser
+        // No need to manually store anything!
+
+        toast.success("Login Successful!", {
+          position: "top-center",
+          className: "bg-green-600 text-white text-center rounded-md py-2 px-4",
+        });
+        navigate('/');
+      } catch (error: any) {
+        toast.error(error.response?.data?.msg || 'Error in Login');
+        console.log(error);
       }
     } else {
-      //we gonna req for signup api
+      // Signup API
       try {
         await axios.post('http://localhost:8080/api/v1/user/register', {
           name,
           username,
           email,
           password
-        })
-        toast.success(" Signup Successful!", {
+        });
+        toast.success("Signup Successful!", {
           position: "top-center",
-          className:"bg-green-600 text-white text-center rounded-md py-2 px-4",
+          className: "bg-green-600 text-white text-center rounded-md py-2 px-4",
         });
         setIsLogin(true);
-      } catch (error) {
-        toast.error('Error in SignUp')
-        console.log(error)
+      } catch (error: any) {
+        toast.error(error.response?.data?.msg || 'Error in SignUp');
+        console.log(error);
       }
     }
   }
+
   return (
     <div className="min-h-screen bg-white flex">
-
       <div className="flex-1 flex items-center justify-center">
         <img src={x} alt="X Logo" className="w-96 h-96 object-contain" />
       </div>
 
-
       <div className="flex-1 flex items-center justify-start bg-white px-16">
         <div className="max-w-md w-full">
-
           <div className="mb-8">
             <h1 className="text-black text-5xl font-bold mb-6">Happening now</h1>
             <h2 className="text-black text-2xl font-bold mb-8">
@@ -68,10 +72,8 @@ const Login = () => {
             </h2>
           </div>
 
-
           <div className="space-y-4 mb-6">
             {isLogin ? (
-
               <>
                 <input
                   type="text"
@@ -89,7 +91,6 @@ const Login = () => {
                 />
               </>
             ) : (
-
               <>
                 <input
                   type="text"
@@ -123,11 +124,9 @@ const Login = () => {
             )}
           </div>
 
-
           <button onClick={onclickHandler} className="w-full bg-blue-500 text-white py-3 rounded-full font-semibold text-base hover:bg-blue-600 transition mb-6">
             {isLogin ? "Sign In" : "Sign up"}
           </button>
-
 
           {!isLogin && (
             <p className="text-gray-500 text-xs mb-12">
@@ -138,7 +137,6 @@ const Login = () => {
               <span className="text-blue-400 hover:underline cursor-pointer">Cookie Use</span>.
             </p>
           )}
-
 
           <div className="mt-8">
             <h3 className="text-black text-lg font-bold mb-4">

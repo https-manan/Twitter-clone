@@ -1,4 +1,4 @@
-import {} from 'react'
+import { } from 'react'
 import { CiSearch } from "react-icons/ci";
 import modi from '../assets/modi.png'
 import xi from '../assets/xi-jinping.png'
@@ -22,7 +22,7 @@ const RightSideBar = () => {
 
         <div className="flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition">
           <div className="flex items-center gap-3">
-            <img src={modi} alt="modi" className="w-10 h-10 rounded-full object-cove-r"/>
+            <img src={modi} alt="modi" className="w-10 h-10 rounded-full object-cove-r" />
             <div>
               <h2 className="font-semibold text-gray-900 text-sm">Modi</h2>
               <p className="text-gray-500 text-sm">@Modiji</p>
@@ -35,7 +35,7 @@ const RightSideBar = () => {
 
         <div className="flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition">
           <div className="flex items-center gap-3">
-            <img src={xi} alt="xi" className="w-10 h-10 rounded-full object-cover"/>
+            <img src={xi} alt="xi" className="w-10 h-10 rounded-full object-cover" />
             <div>
               <h2 className="font-semibold text-gray-900 text-sm">Xi Jinping</h2>
               <p className="text-gray-500 text-sm">@xipingchina</p>
@@ -48,7 +48,7 @@ const RightSideBar = () => {
 
         <div className="flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition rounded-b-xl">
           <div className="flex items-center gap-3">
-            <img src={putin} alt="putin" className="w-10 h-10 rounded-full object-cover"/>
+            <img src={putin} alt="putin" className="w-10 h-10 rounded-full object-cover" />
             <div>
               <h2 className="font-semibold text-gray-900 text-sm">Putin</h2>
               <p className="text-gray-500 text-sm">@putin</p>
