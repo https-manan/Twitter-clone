@@ -19,7 +19,6 @@ const CreatePost = ({ onTweetCreated }: CreatePostProps) => {
     }
 
     try {
-      // Backend will get userId from JWT cookie via auth middleware
       const response = await axios.post('http://localhost:8080/api/v1/tweet/create', {
         description
       }, {
@@ -27,9 +26,8 @@ const CreatePost = ({ onTweetCreated }: CreatePostProps) => {
       });
 
       if (response.data.success) {
-        setDescription(''); // Clear the form
+        setDescription(''); 
         toast.success('Tweet created successfully!');
-        // Refresh the feed
         if (onTweetCreated) {
           onTweetCreated();
         }
@@ -42,14 +40,6 @@ const CreatePost = ({ onTweetCreated }: CreatePostProps) => {
 
   return (
     <div className="border-b border-r border-gray-200">
-      <div className="flex items-center justify-between border-b border-gray-200">
-        <div className="flex-1 text-center font-semibold cursor-pointer py-3 hover:bg-gray-100">
-          For you
-        </div>
-        <div className="flex-1 text-center font-semibold text-gray-500 cursor-pointer py-3 hover:bg-gray-100">
-          Following
-        </div>
-      </div>
 
       <div className="flex items-start gap-4 p-6">
         <img
@@ -73,14 +63,13 @@ const CreatePost = ({ onTweetCreated }: CreatePostProps) => {
                 className="cursor-pointer hover:text-blue-500"
               />
             </div>
-            <button 
+            <button
               onClick={createTweet}
               disabled={!description.trim()}
-              className={`px-6 py-2 rounded-full font-semibold transition ${
-                description.trim() 
-                  ? 'bg-blue-500 text-white hover:bg-blue-600' 
+              className={`px-6 py-2 rounded-full font-semibold transition ${description.trim()
+                  ? 'bg-blue-500 text-white hover:bg-blue-600'
                   : 'bg-blue-300 text-white cursor-not-allowed'
-              }`}
+                }`}
             >
               Post
             </button>

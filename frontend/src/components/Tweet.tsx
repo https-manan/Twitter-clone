@@ -26,15 +26,14 @@ const Tweet = ({ tweet }: TweetProps) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [likeCount, setLikeCount] = useState(tweet.like.length);
-  
-  // Backend will get userId from JWT cookie
+
 
   const likeHandler = async () => {
     try {
       const response = await axios.put(`http://localhost:8080/api/v1/tweet/like/${tweet._id}`, {}, {
         withCredentials: true
       });
-      
+
       if (response.data.success) {
         if (response.data.msg === "Tweet liked") {
           setIsLiked(true);
@@ -57,7 +56,7 @@ const Tweet = ({ tweet }: TweetProps) => {
       const response = await axios.put(`http://localhost:8080/api/v1/user/bookmark/${tweet._id}`, {}, {
         withCredentials: true
       });
-      
+
       if (response.data.success) {
         if (response.data.msg === "Tweet bookmarked") {
           setIsBookmarked(true);
@@ -73,12 +72,12 @@ const Tweet = ({ tweet }: TweetProps) => {
     }
   };
 
-  // Format date
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
     const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
-    
+
     if (diffInMinutes < 1) return 'now';
     if (diffInMinutes < 60) return `${diffInMinutes}m`;
     if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h`;
@@ -119,14 +118,14 @@ const Tweet = ({ tweet }: TweetProps) => {
                 <span>{likeCount}</span>
               </button>
             </div>
-            
+
             <div className="flex items-center gap-2 cursor-pointer hover:text-blue-500 transition">
               <button className="flex items-center gap-1">
                 <FaRegComment size={18} />
                 <span>0</span>
               </button>
             </div>
-            
+
             <div className="flex items-center gap-2 cursor-pointer hover:text-green-500 transition">
               <button onClick={bookmarkHandler}>
                 {isBookmarked ? (

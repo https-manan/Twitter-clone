@@ -22,7 +22,7 @@ const Feed = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'forYou' | 'following'>('forYou');
 
-  // Fetch all tweets (user + following)
+
   const fetchAllTweets = async () => {
     try {
       setLoading(true);
@@ -36,7 +36,6 @@ const Feed = () => {
     } catch (error: any) {
       if (error.response?.status === 401) {
         toast.error('Please login first!');
-        // Redirect to login or handle auth error
         window.location.href = '/login';
       } else {
         console.error('Error fetching tweets:', error);
@@ -46,7 +45,6 @@ const Feed = () => {
     }
   };
 
-  // Fetch following tweets only
   const fetchFollowingTweets = async () => {
     try {
       setLoading(true);
@@ -69,7 +67,7 @@ const Feed = () => {
     }
   };
 
-  // Load tweets on component mount
+
   useEffect(() => {
     if (activeTab === 'forYou') {
       fetchAllTweets();
@@ -78,7 +76,6 @@ const Feed = () => {
     }
   }, [activeTab]);
 
-  // Refresh tweets when new tweet is created
   const refreshTweets = () => {
     if (activeTab === 'forYou') {
       fetchAllTweets();
@@ -90,7 +87,6 @@ const Feed = () => {
   return (
     <div className='w-[60%]'>
       <div>
-        {/* Pass refresh function to CreatePost */}
         <div className="border-b border-r border-gray-200">
           <div className="flex items-center justify-between border-b border-gray-200">
             <div 
@@ -114,7 +110,6 @@ const Feed = () => {
           <CreatePost onTweetCreated={refreshTweets} />
         </div>
 
-        {/* Loading state */}
         {loading ? (
           <div className="flex justify-center items-center py-8">
             <div className="text-gray-500">Loading tweets...</div>
